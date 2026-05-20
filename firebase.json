@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"kinza-backend","appId":"1:977734816281:android:6ecc4abf41dbf570295088","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"kinza-backend","configurations":{"android":"1:977734816281:android:6ecc4abf41dbf570295088","ios":"1:977734816281:ios:6ef5de14e2b792ef295088"}}}}}}
