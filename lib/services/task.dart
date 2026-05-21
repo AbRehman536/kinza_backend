@@ -31,11 +31,11 @@ class TaskService{
         .delete();
   }
   ///Mark As Completed
-  Future markAsCompletedTask(TaskModel model)async{
+  Future markAsCompletedTask(String taskID, bool isCompleted)async{
     await FirebaseFirestore.instance
         .collection(taskCollection)
-        .doc(model.docId)
-        .update({"isCompleted": model.isCompleted});
+        .doc(taskID)
+        .update({"isCompleted": isCompleted});
   }
   ///Get All Task
   Stream<List<TaskModel>> getAllTask(){
@@ -66,4 +66,5 @@ class TaskService{
         .map((taskJson) => TaskModel.fromJson(taskJson.data())
     ).toList());
   }
+  ///Get Saved Task
 }

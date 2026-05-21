@@ -2,47 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:kinza_backend/models/task.dart';
 import 'package:kinza_backend/services/task.dart';
 import 'package:kinza_backend/views/create_task.dart';
-import 'package:kinza_backend/views/get_completed_task.dart';
 import 'package:kinza_backend/views/update_task.dart';
 import 'package:provider/provider.dart';
 
-import 'get_inCompleted_task.dart';
-
-class GetAllTask extends StatelessWidget {
-  const GetAllTask({super.key});
+class GetInCompletedTask extends StatelessWidget {
+  const GetInCompletedTask({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Get All Task"),
+        title: Text("Get InCompleted Task"),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        actions: [
-          IconButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> GetInCompletedTask()));
-          }, icon: Icon(Icons.incomplete_circle)),
-          IconButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> GetCompletedTask()));
-          }, icon: Icon(Icons.circle)),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> CreateTask()));
-        },
-        child: Icon(Icons.add),
       ),
       body: StreamProvider.value(
-          value: TaskService().getAllTask(),
-          initialData: [TaskModel()],
-          builder: (context, child){
-            List<TaskModel> taskList = context.watch<List<TaskModel>>();
-            return ListView.builder(
-              itemCount: taskList.length,
-              itemBuilder: (BuildContext context, int index) {
+        value: TaskService().getInCompletedTask(),
+        initialData: [TaskModel()],
+        builder: (context, child){
+          List<TaskModel> taskList = context.watch<List<TaskModel>>();
+          return ListView.builder(
+            itemCount: taskList.length,
+            itemBuilder: (BuildContext context, int index) {
               return ListTile(
                 leading: Icon(Icons.task),
                 title: Text(taskList[index].title.toString()),
@@ -78,16 +59,16 @@ class GetAllTask extends StatelessWidget {
                       try{
                         await TaskService().deleteTask(taskList[index].docId.toString())
                             .then((value){
-                              showDialog(context: context, builder: (BuildContext context){
-                                return AlertDialog(
-                                  content: Text("Task Deleted Successfully"),
-                                  actions: [
-                                    TextButton(onPressed: (){
-                                      Navigator.pop(context);
-                                    }, child: Text("Okay"))
-                                  ],
-                                );
-                              });
+                          showDialog(context: context, builder: (BuildContext context){
+                            return AlertDialog(
+                              content: Text("Task Deleted Successfully"),
+                              actions: [
+                                TextButton(onPressed: (){
+                                  Navigator.pop(context);
+                                }, child: Text("Okay"))
+                              ],
+                            );
+                          });
                         });
                       }catch(e){
                         ScaffoldMessenger.of(context)
@@ -101,7 +82,7 @@ class GetAllTask extends StatelessWidget {
                 ),
               );
             },);
-          },
+        },
 
       ),
     );
