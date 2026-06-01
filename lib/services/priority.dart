@@ -1,0 +1,53 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../models/priority.dart';
+
+class PriorityTaskServices{
+  String priorityCollection = "PriorityCollection";
+  ///Create Priority
+  Future createPriority(PriorityTaskModel model)async{
+    DocumentReference documentReference =
+    await FirebaseFirestore.instance
+        .collection(priorityCollection)
+        .doc();
+    await FirebaseFirestore.instance
+        .collection(priorityCollection)
+        .doc(documentReference.id)
+        .set(model.toJson(documentReference.id));
+  }
+  ///Update Priority
+  Future updatePriority(PriorityTaskModel model)async{
+    await FirebaseFirestore.instance
+        .collection(priorityCollection)
+        .doc(model.docId)
+        .update({
+      "label" : model.label,});
+  }
+  ///Delete Priority
+  Future deletePriority(String priorityID)async{
+    await FirebaseFirestore.instance
+        .collection(priorityCollection)
+        .doc(priorityID)
+        .delete();
+  }
+  ///Get All Priority
+  Stream<List<PriorityTaskModel>> getAllPriority(){
+    return FirebaseFirestore.instance
+        .collection(priorityCollection)
+        .snapshots()
+        .map((taskList) => taskList.docs
+        .map((taskJson) => PriorityTaskModel.fromJson(taskJson.data())
+    ).toList());
+  }
+  ///Get Priorities
+  Future<PriorityTaskModel> getPriority(String priorityID)
+  async{
+    return await FirebaseFirestore.instance
+        .collection(priorityCollection)
+        .doc(priorityID)
+        .get()
+        .then((value) => PriorityTaskModel.fromJson(value.data()!));
+
+  }
+
+}
