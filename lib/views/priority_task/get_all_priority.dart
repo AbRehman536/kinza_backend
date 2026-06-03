@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kinza_backend/services/priority.dart';
+import 'package:kinza_backend/views/get_priorities.dart';
 import 'package:kinza_backend/views/priority_task/create_update_task.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,7 @@ class GetAllPriority extends StatelessWidget {
         Navigator.push(context, MaterialPageRoute(builder: (context)=> CreateUpdateTask(model: PriorityTaskModel(), isUpdateMode: false,)));
       },child: Icon(Icons.add),),
       body: StreamProvider.value(
-          value: PriorityTaskServices().getAllPriority(),
+          value: PriorityTaskServices().getAllPriorities(),
           initialData: [PriorityTaskModel()],
         builder: (context, child){
             List<PriorityTaskModel> priorityList = context.watch<List<PriorityTaskModel>>();
@@ -46,6 +47,9 @@ class GetAllPriority extends StatelessWidget {
                             .showSnackBar(SnackBar(content: Text(e.toString())));
                       }
                     }, icon: Icon(Icons.delete)),
+                    IconButton(onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> GetPriorityTask(model: PriorityTaskModel())));
+                    }, icon: Icon(Icons.arrow_forward))
                   ],
                 ),
               );

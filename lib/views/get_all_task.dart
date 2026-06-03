@@ -3,6 +3,7 @@ import 'package:kinza_backend/models/task.dart';
 import 'package:kinza_backend/services/task.dart';
 import 'package:kinza_backend/views/create_task.dart';
 import 'package:kinza_backend/views/get_completed_task.dart';
+import 'package:kinza_backend/views/priority_task/get_all_priority.dart';
 import 'package:kinza_backend/views/saved_task.dart';
 import 'package:kinza_backend/views/update_task.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,9 @@ class GetAllTask extends StatelessWidget {
           IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=> GetSavedTask()));
           }, icon: Icon(Icons.book)),
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> GetAllPriority()));
+          }, icon: Icon(Icons.priority_high)),
         ],
       ),
       floatingActionButton: FloatingActionButton(
