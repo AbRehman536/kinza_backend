@@ -21,7 +21,7 @@ class GetAllPriority extends StatelessWidget {
         Navigator.push(context, MaterialPageRoute(builder: (context)=> CreateUpdateTask(model: PriorityTaskModel(), isUpdateMode: false,)));
       },child: Icon(Icons.add),),
       body: StreamProvider.value(
-          value: PriorityTaskServices().getAllPriorities(),
+          value: PriorityTaskServices().getAllPriority(),
           initialData: [PriorityTaskModel()],
         builder: (context, child){
             List<PriorityTaskModel> priorityList = context.watch<List<PriorityTaskModel>>();

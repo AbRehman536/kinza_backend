@@ -31,24 +31,24 @@ class PriorityTaskServices{
         .delete();
   }
   ///Get All Priority
-  Stream<List<PriorityTaskModel>> getAllPriorities() {
+  Stream<List<PriorityTaskModel>> getAllPriority() {
     return FirebaseFirestore.instance
         .collection(priorityCollection)
         .snapshots()
         .map(
-          (list) => list.docs
-          .map((json) => PriorityTaskModel.fromJson(json.data()))
+          (PriorityList) => PriorityList.docs
+          .map((PriorityJson) => PriorityTaskModel.fromJson(PriorityJson.data()))
           .toList(),
     );
   }
-  ///Get Priorities
-  Future<List<PriorityTaskModel>> getPriorities() {
+  ///Get Priority
+  Future<List<PriorityTaskModel>> getPriority() {
     return FirebaseFirestore.instance
         .collection(priorityCollection)
         .get()
         .then(
-          (list) => list.docs
-          .map((json) => PriorityTaskModel.fromJson(json.data()))
+          (PriorityList) => PriorityList.docs
+          .map((PriorityJson) => PriorityTaskModel.fromJson(PriorityJson.data()))
           .toList(),
     );
   }
