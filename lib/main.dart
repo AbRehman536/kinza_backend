@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kinza_backend/views/auth/login.dart';
 import 'package:kinza_backend/views/get_all_task.dart';
 import 'package:kinza_backend/views/priority_task/get_all_priority.dart';
 
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: GetAllTask(),
+      home: Login(),
     );
   }
 }
