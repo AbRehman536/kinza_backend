@@ -1,13 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kinza_backend/provider/user.dart';
 import 'package:kinza_backend/views/auth/login.dart';
 import 'package:kinza_backend/views/get_all_task.dart';
 import 'package:kinza_backend/views/priority_task/get_all_priority.dart';
+import 'package:provider/provider.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context)=> UserProvider())
+  ],
+  child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

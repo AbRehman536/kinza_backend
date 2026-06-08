@@ -5,11 +5,14 @@ import 'package:kinza_backend/views/create_task.dart';
 import 'package:kinza_backend/views/update_task.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/user.dart';
+
 class GetSavedTask extends StatelessWidget {
   const GetSavedTask({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Get Saved Task"),
@@ -17,7 +20,7 @@ class GetSavedTask extends StatelessWidget {
         foregroundColor: Colors.white,
       ),
       body: StreamProvider.value(
-        value: TaskService().getSavedTask("1"),
+        value: TaskService().getSavedTask(userProvider.getUser().docId.toString()),
         initialData: [TaskModel()],
         builder: (context, child){
           List<TaskModel> taskList = context.watch<List<TaskModel>>();

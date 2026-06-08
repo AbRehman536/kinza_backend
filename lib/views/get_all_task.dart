@@ -4,10 +4,12 @@ import 'package:kinza_backend/services/task.dart';
 import 'package:kinza_backend/views/create_task.dart';
 import 'package:kinza_backend/views/get_completed_task.dart';
 import 'package:kinza_backend/views/priority_task/get_all_priority.dart';
+import 'package:kinza_backend/views/profile/get_profile.dart';
 import 'package:kinza_backend/views/saved_task.dart';
 import 'package:kinza_backend/views/update_task.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/user.dart';
 import 'get_inCompleted_task.dart';
 
 class GetAllTask extends StatelessWidget {
@@ -15,12 +17,16 @@ class GetAllTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Get All Task"),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         actions: [
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> GetProfile()));
+          }, icon: Icon(Icons.person)),
           IconButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=> GetInCompletedTask()));
           }, icon: Icon(Icons.incomplete_circle)),
@@ -59,17 +65,17 @@ class GetAllTask extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(onPressed: ()async{
-                      if(taskList[index].saved!.contains("1")){
+                      if(taskList[index].saved!.contains(userProvider.getUser().docId)){
                         await TaskService().removeFromSaved(
                             taskID: taskList[index].docId.toString(),
-                            userID: "1");
+                            userID: userProvider.getUser().docId.toString());
                       }
                       else{
                         await TaskService().addToSaved(
                             taskID: taskList[index].docId.toString(),
-                            userID: "1");
+                            userID: userProvider.getUser().docId.toString());
                       }
-                    }, icon: Icon(taskList[index].saved!.contains("1") ? Icons.bookmark : Icons.bookmark_border , color: Colors.yellow,)),
+                    }, icon: Icon(taskList[index].saved!.contains(userProvider.getUser().docId) ? Icons.bookmark : Icons.bookmark_border , color: Colors.yellow,)),
                     Checkbox(
                         value: taskList[index].isCompleted,
                         onChanged: (value)async{
